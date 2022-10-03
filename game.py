@@ -14,11 +14,11 @@ def playGame(theme, difficulty, model):
     """
 
     board = game.new_game()
+    time.sleep(0.2)
     status = "PLAY"
 
     # main game loop
     while status == "PLAY":
-        time.sleep(0.1)
 
         state = deepcopy(board)
         state = game.change_values(state)
