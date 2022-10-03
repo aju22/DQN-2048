@@ -19,13 +19,13 @@ def playGame(theme, difficulty, model):
 
     # main game loop
     while status == "PLAY":
-
         state = deepcopy(board)
         state = game.change_values(state)
         state = np.array(state, dtype=np.float32).reshape((1, 4, 4, 16))
 
         control_scores = model(state)
         control_buttons = np.flip(np.argsort(control_scores), axis=1)
+
 
         key = control_buttons[0][0]
         legal_moves = game.findLegalMoves(board)
@@ -40,7 +40,7 @@ def playGame(theme, difficulty, model):
         new_board, score = game.move(key, board)
         print(new_board)
 
-        if new_board != board:
+        if not game.checkSame(board, new_board):
 
             board = game.fillTwoOrFour(new_board)
             game.display(board, theme)
