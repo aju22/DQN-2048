@@ -74,6 +74,15 @@ class Game2048:
         else:
             return "PLAY"
 
+    def checkSame(self, board, new_board):
+
+        for i in range(4):
+            for j in range(4):
+                if not board[i][j] == new_board[i][j]:
+                    return False
+
+        return True
+
     def fillTwoOrFour(self, board, iter=1):
         """
         Randomly fill 2 or 4 in available spaces on the board.
@@ -306,4 +315,5 @@ class Game2048:
                         # 2.5 and 7 were obtained by trial and error
                         (j * self.box + 2.5 * self.padding, i * self.box + 7 * self.padding))
 
+        time.sleep(0.3)
         pygame.display.update()
