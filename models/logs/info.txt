@@ -1,0 +1,29 @@
+Architecture:
+
+ACTION_SPACE = 4
+INPUT_SHAPE = (4, 4, 16)
+DEPTH_1 = 128
+DEPTH_2 = 256
+HIDDEN_UNITS = 512
+INITIAL_LR = 1e-4
+
+        input_layer = Input(shape=self.INPUT_SHAPE)
+        conv1 = Conv2D(filters=DEPTH_1, kernel_size=(3, 3), padding='same', activation='relu')(input_layer)
+        conv1_1 = Conv2D(filters=DEPTH_1, kernel_size=(3, 2), padding='same', activation='relu')(conv1)
+        conv1_2 = Conv2D(filters=DEPTH_1, kernel_size=(2, 3), padding='same', activation='relu')(conv1)
+
+        conv2 = Conv2D(filters=DEPTH_2, kernel_size=(2, 2), padding='same', activation='relu')(input_layer)
+        conv2_1 = Conv2D(filters=DEPTH_2, kernel_size=(2, 1), padding='same', activation='relu')(conv2)
+        conv2_2 = Conv2D(filters=DEPTH_2, kernel_size=(1, 2), padding='same', activation='relu')(conv2)
+
+        conv3 = Conv2D(filters=DEPTH_1, kernel_size=(1, 1), padding='same', activation='relu')(input_layer)
+
+        flatten = [Flatten()(x) for x in [conv1_1, conv1_2, conv2_1, conv2_2, conv3]]
+        concat = Concatenate()(flatten)
+
+        fc_layer1 = Dense(DEPTH_1, activation='relu')(concat)
+        fc_layer2 = Dense(DEPTH_2, activation='relu')(fc_layer1)
+
+        fc_layer3 = Dense(self.ACTION_SPACE, activation='linear')(fc_layer2)
+
+        model = Model(inputs=input_layer, outputs=fc_layer3)
