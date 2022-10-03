@@ -21,4 +21,5 @@ Read for details: [Deep Reinforcement Learning: Guide to Deep Q-Learning](https:
 This project implements DQN in Tensorlfow/Keras to solve 2048.
 The GUI of the game is implemented in PyGame.
 
+![](images/sample.gif)
 
